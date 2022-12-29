@@ -80,6 +80,7 @@
             this.deleteSelectedButton.TabIndex = 20;
             this.deleteSelectedButton.Text = "Delete Selected";
             this.deleteSelectedButton.UseVisualStyleBackColor = true;
+            this.deleteSelectedButton.Click += new System.EventHandler(this.deleteSelectedButton_Click);
             // 
             // addNewNoteButton
             // 

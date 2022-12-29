@@ -46,17 +46,22 @@ namespace Note_App
         {
             NoteModel n = new NoteModel();
 
-            n.UserId = CurrUser.Id;
             n.Title = noteTitleValue.Text;
             n.Content = newNoteValue.Text;
-            n.FileName = $"{n.Title}_{n.Id}.txt";
 
-            GlobalConfig.Connection.SaveNewNote(n);
-            
-            CurrNotes.Add(n);
+            // Valid Note
 
-            noteTitleValue.Text = "";
-            newNoteValue.Text = "";
+            if (n.Title.Length > 0 && n.Content.Length > 0)
+            {
+                n.UserId = CurrUser.Id;
+
+                GlobalConfig.Connection.SaveNewNote(n);
+
+                CurrNotes.Add(n);
+
+                noteTitleValue.Text = "";
+                newNoteValue.Text = ""; 
+            }
 
             WireUpLists();
         }
@@ -65,7 +70,26 @@ namespace Note_App
         {
             NoteModel note = (NoteModel)allNotesListBox.SelectedItem;
 
-            MessageBox.Show(note.Content, note.Title, MessageBoxButtons.OK);
+
+            if (note != null)
+            {
+                MessageBox.Show(note.Content, note.Title, MessageBoxButtons.OK); 
+            }
+        }
+
+        private void deleteSelectedButton_Click(object sender, EventArgs e)
+        {
+            NoteModel note = (NoteModel)allNotesListBox.SelectedItem;
+
+
+            if (note != null)
+            {
+                GlobalConfig.Connection.DeleteNoteById(note.Id);
+
+                CurrNotes.Remove(note); 
+            }
+
+            WireUpLists();
         }
     }
 }

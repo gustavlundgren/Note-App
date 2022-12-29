@@ -22,5 +22,7 @@ namespace NoteAppLibrary.DataAccess
         List<NoteModel> GetNotesByUserId(int userid);
 
         List<NoteModel> GetNote_All();
+
+        void DeleteNoteById(int noteid);
     }
 }

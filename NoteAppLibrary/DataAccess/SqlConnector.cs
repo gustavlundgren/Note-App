@@ -37,7 +37,6 @@ namespace NoteAppLibrary.DataAccess
             {
                 var p = new DynamicParameters();
                 p.Add("@UserId", model.UserId);
-                p.Add("@FileName", model.FileName);
                 p.Add("@Title", model.Title);
                 p.Add("@Content", model.Content);
                 p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
@@ -123,6 +122,17 @@ namespace NoteAppLibrary.DataAccess
             }
 
             return output;
+        }
+
+        public void DeleteNoteById(int noteid)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@noteId", noteid);
+
+                connection.Execute("dbo.spNotes_Del_By_Id", p, commandType: CommandType.StoredProcedure);
+            }
         }
     }
 }
